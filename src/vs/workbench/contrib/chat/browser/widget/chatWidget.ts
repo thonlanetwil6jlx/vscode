@@ -733,6 +733,10 @@ export class ChatWidget extends Disposable implements IChatWidget {
 		this.listWidget.scrollTop = value;
 	}
 
+	get scrollHeight(): number {
+		return this.listWidget.scrollHeight;
+	}
+
 	get attachmentModel(): ChatAttachmentModel {
 		return this.input.attachmentModel;
 	}
@@ -2278,6 +2282,15 @@ export class ChatWidget extends Disposable implements IChatWidget {
 
 	reveal(item: ChatTreeItem, relativeTop?: number): void {
 		this.listWidget.reveal(item, relativeTop);
+	}
+
+	/**
+	 * The top offset of an item in transcript content space (same space as
+	 * `scrollTop`/`scrollHeight`), or `undefined` if it is not in the list.
+	 * Virtualization-safe for off-screen items (reads the layout height model).
+	 */
+	getElementTop(item: ChatTreeItem): number | undefined {
+		return this.listWidget.getElementTop(item);
 	}
 
 	focus(item: ChatTreeItem): void {
